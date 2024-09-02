@@ -9,4 +9,11 @@ use Illuminate\Support\Facades\Route;
 //})->middleware('auth:sanctum');
 
 
+//Start Event Route
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+Route::get('/events/lastest', [EventController::class, 'lastestEvents'])->name('events.lastest');
+
+Route::get('/events/{id}', [EventController::class, 'detail'])->name('events.detail');
+//End Event Route
+
