@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('org_email')->nullable();
             $table->string('org_phone')->nullable();
             $table->string('org_logo')->nullable();
+            $table->float('rating');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->integer('limit')->nullable();
             $table->longText('location')->nullable();
