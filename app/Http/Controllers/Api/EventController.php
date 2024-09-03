@@ -58,9 +58,9 @@ class EventController extends Controller
             ], config('constants.HTTP_OK', 200));
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while fetching event.',
+                'message' => 'Not Found this event id',
                 'error' => $e->getMessage()
-            ], config('constants.HTTP_INTERNAL_SERVER_ERROR', 500));
+            ], config('constants.HTTP_INTERNAL_SERVER_ERROR', 404));
         }
     }
 }
