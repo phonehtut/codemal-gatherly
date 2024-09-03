@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -77,7 +78,7 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return response()->json(auth()->user());
+        return response()->json(Auth::user());
     }
 
     // Send password reset link

@@ -18,7 +18,15 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/lastest', [EventController::class, 'lastestEvents'])->name('events.lastest');
 
 Route::get('/event/{id}', [EventController::class, 'detail'])->name('events.detail');
+
+Route::post('/event/create', [EventController::class, 'store'])->name('events.store');
 //End Event Route
+
+//Start Form Route
+Route::post('/event/{event:id}/form', [\App\Http\Controllers\Api\FormController::class, 'index'])->name('events.form');
+
+Route::get('/form/data/{event:id}', [EventController::class, 'formData'])->name('form.data');
+//End Form Route
 
 //Start Auth Route
 Route::post('register', [AuthController::class, 'register']);
