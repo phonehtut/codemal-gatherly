@@ -8,6 +8,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 //Route::get('/test-email', function () {
 //    $details = [
 //        'subject' => 'Test Email',

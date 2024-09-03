@@ -2,51 +2,65 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Rating;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class RatingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(Request $request, Event $event)
     {
-        $ratings = Rating::all();
 
-        return response()->json($ratings, 200);
-    }
+        $rating = $request->rating;
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        
+     
+   
+        if ($rating < 1 || $rating > 5) {
+            return response()->json(['error' => 'Invalid rating value.'], 500);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $user = Auth::user();
+        
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $existingRating = $event->ratings()->where('user_id', $user->id ?? null)->first();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($existingRating) {
+
+            $existingRating->update([
+                'rating' => $rating
+                
+            ]);
+
+            $ratingpoint = $event->ratings()->avg('rating');
+            $event->update(['rating' => $ratingpoint]);
+
+            return response()->json(['message' => 'Rating updated successfully.']);
+
+        } else {
+            $ratings = new Rating(['rating' => $rating,'event_id' => $event->id,'user_id' => $user->id]);
+            
+          
+            if ($user) {
+            
+
+                $user->userratings()->save($ratings);
+            }
+            
+           
+            
+
+            
+            
+        }
+
+        $ratingpoint = $event->ratings()->avg('rating');
+        $event->update(['rating' => $ratingpoint]);
+
+      
+        return response()->json(['message' => 'Rating saved successfully.']);
     }
 }

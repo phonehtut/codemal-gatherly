@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,11 @@ Route::middleware('auth:api')->group(function () {
     Route::get('profile', [AuthController::class, 'profile']);
 });
 //End Auth Route
+
+//Start Rating Route
+Route::post('/event/{event:id}/rating', [RatingController::class, 'store']);
+
+//End Rating Route
+
+//Start Category Route
 
