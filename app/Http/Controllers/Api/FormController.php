@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 
 class FormController extends Controller
@@ -20,8 +21,22 @@ class FormController extends Controller
         try {
             $validated = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255',
-                'phone' => 'required|string|max:13',
+                'email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('forms')->where(function ($query) use ($event) {
+                        return $query->where('event_id', $event->id);
+                    }),
+                ],
+                'phone' => [
+                    'required',
+                    'string',
+                    'max:13',
+                    Rule::unique('forms')->where(function ($query) use ($event) {
+                        return $query->where('event_id', $event->id);
+                    }),
+                ],
             ]);
 
             if ($validated->fails()) {
@@ -41,34 +56,26 @@ class FormController extends Controller
                 }
             }
 
-
-
             $formData = Form::create([
                 'event_id' => $event->id,
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
                 'phone' => $request->get('phone'),
-                'user_id' => $request->get('user_id'),
+                'user_id' => Auth::id(),
                 'dob' => $request->get('dob'),
             ]);
 
-
-            //create history in histories table
-            $history = History::create([
+            // Create history in histories table
+            History::create([
                 'event_id' => $event->id,
-                'user_id' => $request->get('user_id')
+                'user_id' => Auth::id(),
             ]);
-
-            
-
-            
 
             return response()->json([
                 'message' => 'Register Success',
                 'data' => $formData
-                
-            ]);
-        } catch (\Exception $e){
+            ], 201);
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Register Failed',
                 'errors' => $e->getMessage()
