@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Event;
 use App\Models\Form;
+use App\Models\Event;
+use App\Models\History;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -37,17 +41,32 @@ class FormController extends Controller
                 }
             }
 
+
+
             $formData = Form::create([
                 'event_id' => $event->id,
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
                 'phone' => $request->get('phone'),
+                'user_id' => $request->get('user_id'),
                 'dob' => $request->get('dob'),
             ]);
 
+
+            //create history in histories table
+            $history = History::create([
+                'event_id' => $event->id,
+                'user_id' => $request->get('user_id')
+            ]);
+
+            
+
+            
+
             return response()->json([
                 'message' => 'Register Success',
-                'data' => $formData,
+                'data' => $formData
+                
             ]);
         } catch (\Exception $e){
             return response()->json([
