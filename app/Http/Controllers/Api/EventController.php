@@ -33,7 +33,7 @@ class EventController extends Controller
     public function lastestEvents()
     {
         try {
-            $lastest_events = Event::orderBy('created_at', 'desc')->paginate(10);
+            $lastest_events = Event::latest()->paginate(10);
 
             return response()->json([
                 'lastest_events' => $lastest_events,
@@ -62,5 +62,36 @@ class EventController extends Controller
                 'error' => $e->getMessage()
             ], config('constants.HTTP_INTERNAL_SERVER_ERROR', 404));
         }
+    }
+
+    public function search(Request $request){
+
+ 
+
+        
+
+        $title = $request->input('title');
+        $category = $request->input('category');
+
+       
+       
+   
+           
+
+            $events =  Event::latest()
+            ->filter(request(['title','category']))
+            ->paginate(10)
+            ->withQueryString();
+
+            
+          
+           
+            return response()->json([
+                'events' => $events,
+            
+            ], config('constants.HTTP_OK', 200)); 
+     
+
+        
     }
 }

@@ -18,6 +18,11 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/lastest', [EventController::class, 'lastestEvents'])->name('events.lastest');
 
 Route::get('/event/{id}', [EventController::class, 'detail'])->name('events.detail');
+
+
+//Event Search with title and category
+Route::get('/events/search/', [EventController::class, 'search'])->name('events.search');
+
 //End Event Route
 
 //Start Auth Route
@@ -38,4 +43,9 @@ Route::post('/event/{event:id}/rating', [RatingController::class, 'store']);
 //End Rating Route
 
 //Start Category Route
+
+Route::get('/categories',[CategoryController::class,'index'])->name('categories.index');
+Route::post('/categories/create',[CategoryController::class,'createcategory'])->name('categories.create');
+Route::put('/categories/update/{category:id}',[CategoryController::class,'updatecategory'])->name('categories.update');
+//End Category Route
 
