@@ -68,4 +68,24 @@ class EventController extends Controller
             ], config('constants.HTTP_INTERNAL_SERVER_ERROR', 404));
         }
     }
+
+    public function search(Request $request){
+
+        $title = $request->input('title');
+        $category = $request->input('category');
+
+            $events =  Event::latest()
+            ->filter(request(['title','category']))
+            ->paginate(10)
+            ->withQueryString();
+
+            return response()->json([
+                'events' => $events,
+
+            ], config('constants.HTTP_OK', 200)); 
+
+
+
+    }
+
 }

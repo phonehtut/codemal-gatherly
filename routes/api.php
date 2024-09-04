@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\FormController;
+use App\Http\Controllers\Api\HistoryController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -18,6 +20,9 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/lastest', [EventController::class, 'lastestEvents'])->name('events.lastest');
 
 Route::get('/event/{id}', [EventController::class, 'detail'])->name('events.detail');
+
+//Event Search with title and category
+Route::get('/events/search/', [EventController::class, 'search'])->name('events.search');
 //End Event Route
 
 //Start Form Route
@@ -43,5 +48,9 @@ Route::post('/event/{event:id}/rating', [RatingController::class, 'store']);
 
 //End Rating Route
 
-//Start Category Route
+//Start Search Histories Route
+
+Route::get('/event/histories/search',[HistoryController::class,'searchhistory']);
+
+//End Search Histories Route
 

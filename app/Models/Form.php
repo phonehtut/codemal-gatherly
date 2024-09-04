@@ -17,6 +17,7 @@ class Form extends Model
         'name',
         'email',
         'phone',
+        'user_id',
         'dob'
     ];
 

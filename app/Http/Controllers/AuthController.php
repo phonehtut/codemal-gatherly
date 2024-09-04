@@ -153,4 +153,6 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password has been reset successfully.'], 200);
     }
+
+    
 }
