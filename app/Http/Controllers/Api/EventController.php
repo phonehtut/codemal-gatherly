@@ -143,7 +143,7 @@ class EventController extends Controller
 
             return response()->json([
                 'message' => 'Event created successfully',
-                'date' => $event_create,
+                'data' => $event_create,
             ], config('constants.HTTP_OK', 200));
         } catch (\Exception $e) {
             return response()->json([
