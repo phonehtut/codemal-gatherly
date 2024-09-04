@@ -32,14 +32,19 @@ class Event extends Model
       'created_by',
     ];
 
-    public function category(): BelongsTo
-    {
+    public function categories(): BelongsTo{
+        // Each event belongs to one category
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function users(): BelongsTo
+    // public function users(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class, 'created_by', 'id');
+    // }
+
+    public function users()
     {
-        return $this->belongsTo(User::class, 'created_by', 'id');
+        return $this->belongsToMany(User::class, 'histories', 'event_id', 'user_id');
     }
 
     public function user(): BelongsToMany
@@ -51,4 +56,28 @@ class Event extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function scopeFilter($query,$filter){ 
+
+        $query->when($filter['title'] ?? false,function($query,$title){
+
+           $query->where(function ($query) use ($title){
+               $query->where('title','LIKE','%'.$title.'%');
+
+           });
+
+
+       });
+
+       $query->when($filter['category'] ?? false,function($query,$category){
+
+
+           $query->whereHas('categories',function($query) use ($category){
+                //    $query->where('name',$category);
+                $query->where('name', 'LIKE', '%' . $category . '%');
+           });
+
+       });
+    }
+
 }
