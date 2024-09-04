@@ -37,7 +37,7 @@ class EventController extends Controller
     public function lastestEvents()
     {
         try {
-            $lastest_events = Event::latest()->paginate(10);
+            $lastest_events = Event::orderBy('created_at', 'desc')->paginate(10);
 
             return response()->json([
                 'lastest_events' => $lastest_events,
