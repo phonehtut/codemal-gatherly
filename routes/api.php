@@ -25,6 +25,12 @@ Route::get('/events/search/', [EventController::class, 'search'])->name('events.
 
 //End Event Route
 
+//Start Form Route
+Route::post('/event/{event:id}/form', [\App\Http\Controllers\Api\FormController::class, 'index'])->name('events.form');
+
+Route::get('/form/data/{event:id}', [EventController::class, 'formData'])->name('form.data');
+//End Form Route
+
 //Start Auth Route
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);

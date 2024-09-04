@@ -16,15 +16,12 @@ class RatingController extends Controller
 
         $rating = $request->rating;
 
-        
-     
-   
         if ($rating < 1 || $rating > 5) {
             return response()->json(['error' => 'Invalid rating value.'], 500);
         }
 
         $user = Auth::user();
-        
+
 
         $existingRating = $event->ratings()->where('user_id', $user->id ?? null)->first();
 
@@ -32,7 +29,7 @@ class RatingController extends Controller
 
             $existingRating->update([
                 'rating' => $rating
-                
+
             ]);
 
             $ratingpoint = $event->ratings()->avg('rating');
@@ -42,25 +39,19 @@ class RatingController extends Controller
 
         } else {
             $ratings = new Rating(['rating' => $rating,'event_id' => $event->id,'user_id' => $user->id]);
-            
-          
+
+
             if ($user) {
-            
+
 
                 $user->userratings()->save($ratings);
             }
-            
-           
-            
-
-            
-            
         }
 
         $ratingpoint = $event->ratings()->avg('rating');
         $event->update(['rating' => $ratingpoint]);
 
-      
+
         return response()->json(['message' => 'Rating saved successfully.']);
     }
 }

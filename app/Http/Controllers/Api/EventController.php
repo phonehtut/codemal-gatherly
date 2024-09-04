@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
@@ -30,6 +33,7 @@ class EventController extends Controller
         }
     }
 
+    //Show Lastest Events
     public function lastestEvents()
     {
         try {
@@ -46,6 +50,7 @@ class EventController extends Controller
         }
     }
 
+    //Show Detail Event
     public function detail(int $id)
     {
         try {
@@ -62,36 +67,5 @@ class EventController extends Controller
                 'error' => $e->getMessage()
             ], config('constants.HTTP_INTERNAL_SERVER_ERROR', 404));
         }
-    }
-
-    public function search(Request $request){
-
- 
-
-        
-
-        $title = $request->input('title');
-        $category = $request->input('category');
-
-       
-       
-   
-           
-
-            $events =  Event::latest()
-            ->filter(request(['title','category']))
-            ->paginate(10)
-            ->withQueryString();
-
-            
-          
-           
-            return response()->json([
-                'events' => $events,
-            
-            ], config('constants.HTTP_OK', 200)); 
-     
-
-        
     }
 }
