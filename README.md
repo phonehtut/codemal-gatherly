@@ -172,20 +172,31 @@ The Base URL for all all endpoint is : `https://codemal.newwaymm.com`
     ```bash
     POST https://codemal.newwaymm.com/api/register
     ```
+- __Example Request Body__: 
+
+    ```json
+        {
+            "name": "User1",
+            "email": "user1@example.com",
+            "phone": "0912345678",
+            "password": "password123"
+        }
+    ```
+
 - __Example Response__:
   
     ```json
         {
             "message": "Register successfully",
             "data": {
-                "name": "User6",
-                "email": "user6@example.com",
-                "phone": "09774829393",
-                "updated_at": "2024-09-04T16:56:11.000000Z",
-                "created_at": "2024-09-04T16:56:11.000000Z",
-                "id": 8
+                "name": "User1",
+                "email": "user1@example.com",
+                "phone": "0912345678",
+                "updated_at": "2024-09-05T11:42:47.000000Z",
+                "created_at": "2024-09-05T11:42:47.000000Z",
+                "id": 9
             },
-            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzI1NDY4OTcyLCJleHAiOjE3MjU0NzI1NzIsIm5iZiI6MTcyNTQ2ODk3MiwianRpIjoiMXdXOGNSWVREM3Y4Qjl2ayIsInN1YiI6IjgiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3"
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzI1NTM2NTY3LCJleHAiOjE3MjU1NDAxNjcsIm5iZiI6MTcyNTUzNjU2NywianRpIjoiVTN1MThCOEF2SzNwdlhLbSIsInN1YiI6IjkiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.mdtPOUoU7e9P"
         }
     ```
 
@@ -198,6 +209,14 @@ The Base URL for all all endpoint is : `https://codemal.newwaymm.com`
   
     ```bash
     POST https://codemal.newwaymm.com/api/login
+    ```
+- __Example Request Body__: 
+  
+    ```json
+        {
+            "email": "user5@example.com",
+            "password": "password123"
+        }
     ```
 - __Example Response__: 
   
@@ -277,6 +296,18 @@ The Base URL for all all endpoint is : `https://codemal.newwaymm.com`
     ```bash
     POST https://codemal.newwaymm.com/api/event/create
     ```
+- __Example Request Body__:
+  
+    | Field         | Type     | Required |
+    | ------------- | -------- | -------- |
+    | title         | String   | true     |
+    | `description` | `String` | false    |
+    | `image`       | `file`   | [x]     |
+    | `start_date`  | `date`   | false    |
+    | `end_date`    | `date`   | [ ]    |
+    | `org_name`    | `String` | [ ] |
+
+- [x]
 - __Example Response__: 
 
     ```json
