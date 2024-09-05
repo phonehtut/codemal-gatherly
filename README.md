@@ -307,7 +307,7 @@ The Base URL for all all endpoint is : `https://codemal.newwaymm.com`
     | `end_date`    | `date`   | [ ]    |
     | `org_name`    | `String` | [ ] |
 
-- [x]
+- [X]
 - __Example Response__: 
 
     ```json
