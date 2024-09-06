@@ -76,6 +76,14 @@ class EventController extends Controller
     public function formData(Event $event)
     {
         try {
+            // Check if the current user is the creator of the event
+            if ($event->created_by !== Auth::id()) {
+                return response()->json([
+                    'message' => 'Unauthorized to access this form data.'
+                ], 403); // HTTP 403 Forbidden
+            }
+
+            // Fetch form data related to the event
             $data = Form::where('event_id', $event->id)->get();
 
             return response()->json([
@@ -267,7 +275,7 @@ class EventController extends Controller
         $event = Event::find($id);
 
         // Check if the event exists
-        if ($event->isEmpty()) {
+        if (is_null($event)) {
             return response()->json([
                 'message' => 'Event not found.',
             ], 404);
