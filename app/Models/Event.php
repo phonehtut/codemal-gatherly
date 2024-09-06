@@ -29,7 +29,12 @@ class Event extends Model
       'limit',
       'location',
       'plaform',
+      'status',
       'created_by',
+    ];
+
+    protected $casts = [
+        'status' => 'boolean',
     ];
 
     public function category(): BelongsTo
