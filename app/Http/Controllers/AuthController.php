@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,11 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(['token' => $token], 201);
+        return response()->json([
+            'message' => 'Register successfully',
+            'data' => $user,
+            'token' => $token,
+        ], 201, ['Content-Type' => 'application/json; charset=utf-8']);
     }
 
 
@@ -65,7 +70,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-        return response()->json(['token' => $token]);
+        return response()->json([
+            'message' => 'Login successfully.',
+            'user' => Auth::user() ?? 'Guest User',
+            'token' => $token
+        ]);
     }
 
     public function logout()
@@ -77,7 +86,7 @@ class AuthController extends Controller
 
     public function profile()
     {
-        return response()->json(auth()->user());
+        return response()->json(Auth::user());
     }
 
     // Send password reset link
@@ -152,4 +161,13 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password has been reset successfully.'], 200);
     }
+
+    public function error()
+    {
+        return response()->json([
+            'message' => 'Please Login First.',
+        ], 403);
+    }
+
+
 }

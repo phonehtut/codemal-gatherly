@@ -14,4 +14,10 @@ class Category extends Model
     protected $fillable = [
       'name',
     ];
+
+    public function events()
+    {
+        // Each category has many events
+        return $this->hasMany(Event::class, 'category_id', 'id');
+    }
 }

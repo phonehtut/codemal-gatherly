@@ -25,6 +25,7 @@ class Event extends Model
       'org_phone',
       'org_logo',
       'category_id',
+      'rating',
       'limit',
       'location',
       'plaform',
@@ -44,5 +45,33 @@ class Event extends Model
     public function user(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'histories', 'event_id', 'user_id');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function scopeFilter($query,$filter){
+
+        $query->when($filter['title'] ?? false,function($query,$title){
+
+            $query->where(function ($query) use ($title){
+                $query->where('title','LIKE','%'.$title.'%');
+
+            });
+
+
+        });
+
+        $query->when($filter['category'] ?? false,function($query,$category){
+
+
+            $query->whereHas('categories',function($query) use ($category){
+                //    $query->where('name',$category);
+                $query->where('name', 'LIKE', '%' . $category . '%');
+            });
+
+        });
     }
 }
