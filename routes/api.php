@@ -14,12 +14,21 @@ use Illuminate\Support\Facades\Route;
 //})->middleware('auth:sanctum');
 
 
+//Start Category Route
+
+Route::get('/categories', [CategoryController::class, 'index']);
+
+//End Category Route
+
 //Start Event Route
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
 Route::get('/events/lastest', [EventController::class, 'latestEvents'])->name('events.lastest');
 
 Route::get('/event/{id}', [EventController::class, 'detail'])->name('events.detail');
+
+// Show Event with category
+Route::get('/category/{category:id}/events', [EventController::class, 'categoryEvents'])->name('events.categoryEvents');
 //End Event Route
 
 //Event Search with title and category
@@ -61,7 +70,7 @@ Route::middleware('auth:api')->group(function () {
     // Show My History
     Route::get('/my_history', [HistoryController::class, 'myHistory']);
 
-    // Logout
+    // LogoutC
     Route::post('logout', [AuthController::class, 'logout']);
 
     /// My Profile

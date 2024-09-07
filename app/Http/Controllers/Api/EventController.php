@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\Form;
 use Illuminate\Http\Request;
@@ -299,6 +300,24 @@ class EventController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'An error occurred while deleting the event.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // Show Event with category
+    public function categoryEvents(Category $category)
+    {
+        try {
+            $events = $category->events()->get();
+
+            return response()->json([
+                'category' => $category->name,
+                'events' => $events,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while deleting the category.',
                 'error' => $e->getMessage(),
             ], 500);
         }
