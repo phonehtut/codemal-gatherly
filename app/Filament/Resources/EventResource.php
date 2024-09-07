@@ -137,6 +137,7 @@ class EventResource extends Resource
         return $table
             ->deferLoading()
             ->striped()
+            ->poll('10s')
             ->columns([
                 TextColumn::make('id')
                     ->label('Event ID')
