@@ -43,8 +43,10 @@ class EventResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) Event::count();
+        return static::getModel()::count();
     }
+
+    protected static ?string $navigationGroup = "Events Management";
 
     protected static ?string $model = Event::class;
 
@@ -136,6 +138,11 @@ class EventResource extends Resource
             ->deferLoading()
             ->striped()
             ->columns([
+                TextColumn::make('id')
+                    ->label('Event ID')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Image')
                     ->disk('public'),
@@ -204,7 +211,10 @@ class EventResource extends Resource
 //                        'danger' => fn ($state) => !$state,
 //                    ]),
                 ToggleColumn::make('status')
-                    ->label('Status')
+                    ->label('Status'),
+                TextColumn::make('rating')
+                    ->badge()
+                    ->default('Unknown')
             ])
             ->filters([
                 //
@@ -300,6 +310,7 @@ class EventResource extends Resource
                             ->copyMessage('Copied'),
                         TextEntry::make('users.name')
                             ->label('Organizer')
+                            ->formatStateUsing(fn($state) => $state ?? 'Unknown')
                             ->badge()
                             ->copyable()
                             ->copyMessage('Copied'),
