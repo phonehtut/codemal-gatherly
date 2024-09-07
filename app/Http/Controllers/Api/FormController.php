@@ -46,7 +46,7 @@ class FormController extends Controller
                 ], 422);
             }
 
-            if ($event->limit !== null) {
+            if ($event->limit !== 0) {
                 $currentFormsCount = Form::where('event_id', $event->id)->count();
                 if ($currentFormsCount >= $event->limit) {
                     return response()->json([
