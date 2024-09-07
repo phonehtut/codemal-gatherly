@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->authGuard('admin')
-            ->spa()
+//            ->spa()
             ->topNavigation()
             ->maxContentWidth('full')
             ->login()
