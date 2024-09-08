@@ -37,21 +37,22 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = JWTAuth::fromUser($user);
+        // Set token expiration for 1 day (default)
+        $token = JWTAuth::fromUser($user, ['exp' => now()->addDays(1)->timestamp]);
 
         return response()->json([
             'message' => 'Register successfully',
             'data' => $user,
             'token' => $token,
-        ], 201, ['Content-Type' => 'application/json; charset=utf-8']);
+        ], 201)->cookie('token', $token, 60*24);
     }
-
 
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
+            'remember_me' => 'boolean', // Add remember me option
         ]);
 
         if ($validator->fails()) {
@@ -70,11 +71,15 @@ class AuthController extends Controller
             ], 401);
         }
 
+        // Check for remember me option
+        $expiration = $request->remember_me ? now()->addDays(30) : now()->addDays(1);
+        $token = JWTAuth::claims(['exp' => $expiration->timestamp])->attempt($credentials);
+
         return response()->json([
             'message' => 'Login successfully.',
             'user' => Auth::user() ?? 'Guest User',
             'token' => $token
-        ]);
+        ], 200)->cookie('token', $token, 60*24);
     }
 
     public function logout()
