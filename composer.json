@@ -7,9 +7,11 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
+        "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "rupadana/filament-announce": "^3.2",
         "saade/filament-fullcalendar": "^3.0",
         "tymon/jwt-auth": "^2.1"
     },

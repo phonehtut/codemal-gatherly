@@ -30,7 +30,7 @@ class FormDataResource extends Resource
 
     protected static ?string $navigationGroup = "Events Management";
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-wallet';
 
     public static function form(Form $form): Form
     {
