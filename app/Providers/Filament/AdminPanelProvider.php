@@ -72,12 +72,12 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-//            ->userMenuItems([
-//                'profile' => MenuItem::make()
-//                    ->label(fn() => auth()->user()->name)
-//                    ->url(fn (): string => EditProfilePage::getUrl())
-//                    ->icon('heroicon-m-user-circle'),
-//            ])
+            ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label("Edit Profile")
+                    ->url(fn (): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
+            ])
             ->plugins([
                 FilamentFullCalendarPlugin::make()
                     ->selectable()
@@ -86,8 +86,6 @@ class AdminPanelProvider extends PanelProvider
                     ->shouldShowAvatarForm()
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldRegisterNavigation(false),
-                FilamentAnnouncePlugin::make()
-                    ->defaultColor(Color::Blue)
             ]);
     }
 }
